@@ -1,4 +1,4 @@
-# ElevenLabs .NET SDK
+# Newtro ElevenLabs .NET SDK
 
 [![NuGet](https://img.shields.io/nuget/v/Newtro.ElevenLabs.DotNet.SDK.svg)](https://www.nuget.org/packages/Newtro.ElevenLabs.DotNet.SDK/)
 
