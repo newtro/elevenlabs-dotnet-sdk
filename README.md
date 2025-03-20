@@ -1,236 +1,133 @@
-# ElevenLabs .NET SDK Documentation
+# ElevenLabs .NET SDK
 
-## Overview
+[![NuGet](https://img.shields.io/nuget/v/Newtro.ElevenLabs.DotNet.SDK.svg)](https://www.nuget.org/packages/Newtro.ElevenLabs.DotNet.SDK/)
 
-The ElevenLabs .NET SDK provides a comprehensive client library for integrating with the ElevenLabs API in .NET applications. This SDK supports all ElevenLabs API features including text-to-speech, voice management, speech-to-text, voice changing, and audio isolation.
+A comprehensive .NET 8 SDK for integrating with the ElevenLabs API. This SDK provides access to text-to-speech, voice management, speech-to-text, voice changing, and audio isolation features.
 
 ## Installation
 
-Install the ElevenLabs SDK via NuGet Package Manager:
+Install the package via NuGet:
 
 ```bash
-dotnet add package ElevenLabs.SDK
+dotnet add package Newtro.ElevenLabs.DotNet.SDK
 ```
 
 Or via the Package Manager Console:
 
 ```powershell
-Install-Package ElevenLabs.SDK
+Install-Package Newtro.ElevenLabs.DotNet.SDK
 ```
 
 ## Getting Started
 
-### Configuration
-
-To use the ElevenLabs SDK, you need to configure it with your API key:
+### Basic Setup
 
 ```csharp
-using ElevenLabs.SDK;
-using ElevenLabs.SDK.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-
-// Setup dependency injection
-var services = new ServiceCollection();
-
-// Add ElevenLabs services
+// Add services to the DI container
 services.AddElevenLabs(options =>
 {
     options.ApiKey = "your-api-key-here";
-    // Optional: customize base URL and timeout
-    // options.BaseUrl = "https://api.elevenlabs.io/v1/";
-    // options.TimeoutSeconds = 30;
 });
 
-// Build service provider
-var serviceProvider = services.BuildServiceProvider();
-
-// Get ElevenLabs client
-var elevenLabsClient = serviceProvider.GetRequiredService<IElevenLabsClient>();
+// Or create a client directly
+var client = new ElevenLabsClient("your-api-key-here");
 ```
 
-### Text-to-Speech Example
+## Examples
 
-Convert text to speech using a specific voice:
-
-```csharp
-using ElevenLabs.SDK.Models;
-using System.IO;
-using System.Threading.Tasks;
-
-public async Task TextToSpeechExample(IElevenLabsClient client)
-{
-    // Create a text-to-speech request
-    var request = new TextToSpeechRequest
-    {
-        Text = "Hello, this is a test of the ElevenLabs text to speech API.",
-        ModelId = "eleven_monolingual_v1", // Optional: specify model ID
-        VoiceSettings = new VoiceSettings
-        {
-            Stability = 0.5,
-            SimilarityBoost = 0.75
-        }
-    };
-
-    // Get available voices
-    var voices = await client.Voices.GetVoicesAsync();
-    var voiceId = voices[0].Id; // Use the first available voice
-
-    // Convert text to speech
-    using var audioStream = await client.TextToSpeech.TextToSpeechAsync(voiceId, request);
-    
-    // Save the audio to a file
-    using var fileStream = File.Create("output.mp3");
-    await audioStream.CopyToAsync(fileStream);
-}
-```
-
-### Streaming Text-to-Speech Example
-
-Stream text-to-speech conversion for real-time audio:
+### Text-to-Speech
 
 ```csharp
-public async Task StreamTextToSpeechExample(IElevenLabsClient client)
+// Get a list of available voices
+var voices = await client.Voices.GetVoicesAsync();
+
+// Convert text to speech
+var request = new TextToSpeechRequest
 {
-    var request = new TextToSpeechRequest
+    Text = "Hello, world! This is ElevenLabs text-to-speech API.",
+    ModelId = "eleven_monolingual_v1",
+    VoiceSettings = new VoiceSettings
     {
-        Text = "This is a streaming text to speech example.",
-        ModelId = "eleven_monolingual_v1"
-    };
-
-    var voices = await client.Voices.GetVoicesAsync();
-    var voiceId = voices[0].Id;
-
-    // Stream text to speech
-    using var audioStream = await client.TextToSpeech.StreamTextToSpeechAsync(voiceId, request);
-    
-    // Process the stream in real-time
-    // For example, play it through an audio player or save it
-    using var fileStream = File.Create("streaming_output.mp3");
-    await audioStream.CopyToAsync(fileStream);
-}
-```
-
-## Voice Management
-
-### Get Available Voices
-
-Retrieve all available voices:
-
-```csharp
-public async Task GetVoicesExample(IElevenLabsClient client)
-{
-    var voices = await client.Voices.GetVoicesAsync();
-    
-    foreach (var voice in voices)
-    {
-        Console.WriteLine($"Voice ID: {voice.Id}");
-        Console.WriteLine($"Name: {voice.Name}");
-        Console.WriteLine($"Category: {voice.Category}");
-        Console.WriteLine();
+        Stability = 0.5f,
+        SimilarityBoost = 0.75f
     }
-}
+};
+
+// Get the audio as a stream
+using var audioStream = await client.TextToSpeech.TextToSpeechAsync(
+    "21m00Tcm4TlvDq8ikWAM", // Voice ID
+    request
+);
+
+// Save to file
+using var fileStream = File.Create("output.mp3");
+await audioStream.CopyToAsync(fileStream);
 ```
 
-### Get Voice Settings
-
-Retrieve settings for a specific voice:
+### Voice Management
 
 ```csharp
-public async Task GetVoiceSettingsExample(IElevenLabsClient client, string voiceId)
+// Get all available voices
+var voices = await client.Voices.GetVoicesAsync();
+
+// Get a specific voice
+var voice = await client.Voices.GetVoiceAsync("21m00Tcm4TlvDq8ikWAM");
+
+// Get voice settings
+var settings = await client.Voices.GetVoiceSettingsAsync("21m00Tcm4TlvDq8ikWAM");
+
+// Edit voice settings
+await client.Voices.EditVoiceSettingsAsync("21m00Tcm4TlvDq8ikWAM", new VoiceSettings
 {
-    var settings = await client.Voices.GetVoiceSettingsAsync(voiceId);
-    
-    Console.WriteLine($"Stability: {settings.Stability}");
-    Console.WriteLine($"Similarity Boost: {settings.SimilarityBoost}");
-}
+    Stability = 0.7f,
+    SimilarityBoost = 0.8f
+});
 ```
 
-### Edit Voice Settings
-
-Modify settings for a specific voice:
+### Speech-to-Text
 
 ```csharp
-public async Task EditVoiceSettingsExample(IElevenLabsClient client, string voiceId)
-{
-    var settings = new VoiceSettings
+// Convert speech to text
+using var fileStream = File.OpenRead("speech.mp3");
+var text = await client.SpeechToText.SpeechToTextAsync(fileStream);
+Console.WriteLine(text);
+```
+
+### Voice Changer
+
+```csharp
+// Change voice in an audio file
+using var inputStream = File.OpenRead("input.mp3");
+using var outputStream = await client.VoiceChanger.ChangeVoiceAsync(
+    inputStream,
+    "21m00Tcm4TlvDq8ikWAM", // Target voice ID
+    new VoiceSettings
     {
-        Stability = 0.8,
-        SimilarityBoost = 0.6
-    };
-    
-    await client.Voices.EditVoiceSettingsAsync(voiceId, settings);
-    Console.WriteLine("Voice settings updated successfully.");
-}
+        Stability = 0.5f,
+        SimilarityBoost = 0.75f
+    }
+);
+
+// Save to file
+using var fileStream = File.Create("changed_voice.mp3");
+await outputStream.CopyToAsync(fileStream);
 ```
 
-## Speech-to-Text
-
-Convert audio to text:
+### Audio Isolation
 
 ```csharp
-public async Task SpeechToTextExample(IElevenLabsClient client)
-{
-    // Load audio file
-    using var audioStream = File.OpenRead("input_audio.mp3");
-    
-    // Convert speech to text
-    var result = await client.SpeechToText.SpeechToTextAsync(audioStream);
-    
-    Console.WriteLine($"Transcribed Text: {result.Text}");
-    Console.WriteLine($"Language: {result.Language}");
-    Console.WriteLine($"Confidence: {result.Confidence}");
-}
-```
+// Isolate voice from an audio file
+using var inputStream = File.OpenRead("mixed_audio.mp3");
+using var outputStream = await client.AudioIsolation.IsolateVoiceAsync(inputStream);
 
-## Voice Changer
-
-Change the voice in an audio file:
-
-```csharp
-public async Task VoiceChangerExample(IElevenLabsClient client)
-{
-    // Load audio file
-    using var audioStream = File.OpenRead("input_audio.mp3");
-    
-    // Get available voices
-    var voices = await client.Voices.GetVoicesAsync();
-    var targetVoiceId = voices[0].Id;
-    
-    // Change voice
-    using var changedAudioStream = await client.VoiceChanger.ChangeVoiceAsync(
-        audioStream, 
-        targetVoiceId, 
-        modelId: "eleven_monolingual_v1" // Optional: specify model ID
-    );
-    
-    // Save the audio with changed voice
-    using var fileStream = File.Create("voice_changed.mp3");
-    await changedAudioStream.CopyToAsync(fileStream);
-}
-```
-
-## Audio Isolation
-
-Isolate voice from background noise in an audio file:
-
-```csharp
-public async Task AudioIsolationExample(IElevenLabsClient client)
-{
-    // Load audio file
-    using var audioStream = File.OpenRead("noisy_audio.mp3");
-    
-    // Isolate voice
-    using var isolatedAudioStream = await client.AudioIsolation.IsolateVoiceAsync(audioStream);
-    
-    // Save the isolated audio
-    using var fileStream = File.Create("isolated_voice.mp3");
-    await isolatedAudioStream.CopyToAsync(fileStream);
-}
+// Save to file
+using var fileStream = File.Create("isolated_voice.mp3");
+await outputStream.CopyToAsync(fileStream);
 ```
 
 ## Error Handling
 
-The SDK uses custom exceptions to provide detailed error information:
+The SDK uses custom exceptions for error handling:
 
 ```csharp
 try
@@ -239,35 +136,16 @@ try
 }
 catch (ElevenLabsAuthenticationException ex)
 {
-    Console.WriteLine($"Authentication error: {ex.Message}");
-    // Handle authentication issues (e.g., invalid API key)
+    // Handle authentication errors
+    Console.WriteLine($"Authentication failed: {ex.Message}");
 }
-catch (ElevenLabsResourceNotFoundException ex)
+catch (ElevenLabsRateLimitException ex)
 {
-    Console.WriteLine($"Resource not found: {ex.Message}");
-    // Handle not found errors
-}
-catch (ElevenLabsValidationException ex)
-{
-    Console.WriteLine($"Validation error: {ex.Message}");
-    // Handle validation errors
-}
-catch (ElevenLabsRateLimitExceededException ex)
-{
+    // Handle rate limit errors
     Console.WriteLine($"Rate limit exceeded: {ex.Message}");
-    Console.WriteLine($"Reset time: {ex.ResetTime}");
-    // Handle rate limiting
-}
-catch (ElevenLabsServerException ex)
-{
-    Console.WriteLine($"Server error: {ex.Message}");
-    // Handle server errors
 }
 catch (ElevenLabsException ex)
 {
-    Console.WriteLine($"ElevenLabs API error: {ex.Message}");
-    Console.WriteLine($"Status code: {ex.StatusCode}");
-    Console.WriteLine($"Error code: {ex.ErrorCode}");
     // Handle other API errors
 }
 ```
