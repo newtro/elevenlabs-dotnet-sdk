@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>ElevenLabs.SDK</id>
+    <version>1.0.0</version>
+    <title>ElevenLabs .NET SDK</title>
+    <authors>ElevenLabs SDK Team</authors>
+    <owners>ElevenLabs SDK Team</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <projectUrl>https://github.com/elevenlabs/elevenlabs-dotnet</projectUrl>
+    <description>A comprehensive .NET SDK for integrating with the ElevenLabs API. This SDK provides access to text-to-speech, voice management, speech-to-text, voice changing, and audio isolation features.</description>
+    <releaseNotes>Initial release of the ElevenLabs .NET SDK.</releaseNotes>
+    <copyright>Copyright 2025</copyright>
+    <tags>elevenlabs text-to-speech speech-to-text voice-ai audio</tags>
+    <dependencies>
+      <group targetFramework="net8.0">
+        <dependency id="Microsoft.Extensions.DependencyInjection" version="8.0.0" />
+        <dependency id="Microsoft.Extensions.Http" version="8.0.0" />
+        <dependency id="Microsoft.Extensions.Options" version="8.0.0" />
+        <dependency id="System.Net.Http.Json" version="8.0.0" />
+        <dependency id="Newtonsoft.Json" version="13.0.3" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="src\ElevenLabs.SDK\bin\Release\net8.0\ElevenLabs.SDK.dll" target="lib\net8.0" />
+    <file src="src\ElevenLabs.SDK\bin\Release\net8.0\ElevenLabs.SDK.xml" target="lib\net8.0" />
+    <file src="docs\README.md" target="" />
+    <file src="LICENSE" target="" />
+  </files>
+</package>
