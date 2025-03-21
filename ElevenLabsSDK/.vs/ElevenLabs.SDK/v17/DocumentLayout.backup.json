@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "D:\\Repos\\elevenlabs-dotnet-sdk\\ElevenLabsSDK\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{5A5F93C9-6F39-44C5-953A-C16F2F8B95FC}|tests\\ElevenLabs.SDK.Tests\\ElevenLabs.SDK.Tests.csproj|d:\\repos\\elevenlabs-dotnet-sdk\\elevenlabssdk\\tests\\elevenlabs.sdk.tests\\services\\voiceservicetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5A5F93C9-6F39-44C5-953A-C16F2F8B95FC}|tests\\ElevenLabs.SDK.Tests\\ElevenLabs.SDK.Tests.csproj|solutionrelative:tests\\elevenlabs.sdk.tests\\services\\voiceservicetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{05351597-6A3F-4E80-B0F2-0A6FAEBD60D0}|src\\ElevenLabs.SDK\\ElevenLabs.SDK.csproj|d:\\repos\\elevenlabs-dotnet-sdk\\elevenlabssdk\\src\\elevenlabs.sdk\\models\\voice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{05351597-6A3F-4E80-B0F2-0A6FAEBD60D0}|src\\ElevenLabs.SDK\\ElevenLabs.SDK.csproj|solutionrelative:src\\elevenlabs.sdk\\models\\voice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{5A5F93C9-6F39-44C5-953A-C16F2F8B95FC}|tests\\ElevenLabs.SDK.Tests\\ElevenLabs.SDK.Tests.csproj|d:\\repos\\elevenlabs-dotnet-sdk\\elevenlabssdk\\tests\\elevenlabs.sdk.tests\\services\\speechtotextservicetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5A5F93C9-6F39-44C5-953A-C16F2F8B95FC}|tests\\ElevenLabs.SDK.Tests\\ElevenLabs.SDK.Tests.csproj|solutionrelative:tests\\elevenlabs.sdk.tests\\services\\speechtotextservicetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -34,11 +42,37 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Voice.cs",
+              "DocumentMoniker": "D:\\Repos\\elevenlabs-dotnet-sdk\\ElevenLabsSDK\\src\\ElevenLabs.SDK\\Models\\Voice.cs",
+              "RelativeDocumentMoniker": "src\\ElevenLabs.SDK\\Models\\Voice.cs",
+              "ToolTip": "D:\\Repos\\elevenlabs-dotnet-sdk\\ElevenLabsSDK\\src\\ElevenLabs.SDK\\Models\\Voice.cs",
+              "RelativeToolTip": "src\\ElevenLabs.SDK\\Models\\Voice.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-21T01:46:23.094Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "VoiceServiceTests.cs",
+              "DocumentMoniker": "D:\\Repos\\elevenlabs-dotnet-sdk\\ElevenLabsSDK\\tests\\ElevenLabs.SDK.Tests\\Services\\VoiceServiceTests.cs",
+              "RelativeDocumentMoniker": "tests\\ElevenLabs.SDK.Tests\\Services\\VoiceServiceTests.cs",
+              "ToolTip": "D:\\Repos\\elevenlabs-dotnet-sdk\\ElevenLabsSDK\\tests\\ElevenLabs.SDK.Tests\\Services\\VoiceServiceTests.cs",
+              "RelativeToolTip": "tests\\ElevenLabs.SDK.Tests\\Services\\VoiceServiceTests.cs",
+              "ViewState": "AgIAACwAAAAAAAAAAAApwEUAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-21T01:46:19.871Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "SpeechToTextServiceTests.cs",
               "DocumentMoniker": "D:\\Repos\\elevenlabs-dotnet-sdk\\ElevenLabsSDK\\tests\\ElevenLabs.SDK.Tests\\Services\\SpeechToTextServiceTests.cs",
               "RelativeDocumentMoniker": "tests\\ElevenLabs.SDK.Tests\\Services\\SpeechToTextServiceTests.cs",
@@ -51,12 +85,12 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "Model.cs",
               "DocumentMoniker": "D:\\Repos\\elevenlabs-dotnet-sdk\\ElevenLabsSDK\\src\\ElevenLabs.SDK\\Models\\Model.cs",
               "RelativeDocumentMoniker": "src\\ElevenLabs.SDK\\Models\\Model.cs",
-              "ToolTip": "D:\\Repos\\elevenlabs-dotnet-sdk\\ElevenLabsSDK\\src\\ElevenLabs.SDK\\Models\\Model.cs*",
-              "RelativeToolTip": "src\\ElevenLabs.SDK\\Models\\Model.cs*",
+              "ToolTip": "D:\\Repos\\elevenlabs-dotnet-sdk\\ElevenLabsSDK\\src\\ElevenLabs.SDK\\Models\\Model.cs",
+              "RelativeToolTip": "src\\ElevenLabs.SDK\\Models\\Model.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-21T01:45:55.423Z",
@@ -64,7 +98,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "ModelServiceTests.cs",
               "DocumentMoniker": "D:\\Repos\\elevenlabs-dotnet-sdk\\ElevenLabsSDK\\tests\\ElevenLabs.SDK.Tests\\Services\\ModelServiceTests.cs",
               "RelativeDocumentMoniker": "tests\\ElevenLabs.SDK.Tests\\Services\\ModelServiceTests.cs",
@@ -77,7 +111,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "UnitTest1.cs",
               "DocumentMoniker": "D:\\Repos\\elevenlabs-dotnet-sdk\\ElevenLabsSDK\\tests\\ElevenLabs.SDK.Tests\\UnitTest1.cs",
               "RelativeDocumentMoniker": "tests\\ElevenLabs.SDK.Tests\\UnitTest1.cs",
@@ -90,7 +124,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "BaseService.cs",
               "DocumentMoniker": "D:\\Repos\\elevenlabs-dotnet-sdk\\ElevenLabsSDK\\src\\ElevenLabs.SDK\\Services\\BaseService.cs",
               "RelativeDocumentMoniker": "src\\ElevenLabs.SDK\\Services\\BaseService.cs",
@@ -107,7 +141,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "AudioIsolationService.cs",
               "DocumentMoniker": "D:\\Repos\\elevenlabs-dotnet-sdk\\ElevenLabsSDK\\src\\ElevenLabs.SDK\\Services\\AudioIsolationService.cs",
               "RelativeDocumentMoniker": "src\\ElevenLabs.SDK\\Services\\AudioIsolationService.cs",
