@@ -1,0 +1,9 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/ElevenLabsSDK/.vs/ElevenLabs.SDK/CopilotIndices/17.13.433.20974
+/ElevenLabsSDK/.vs/ElevenLabs.SDK/FileContentIndex
+/ElevenLabsSDK/src/ElevenLabs.SDK/obj/Debug/net8.0
+/ElevenLabsSDK/tests/ElevenLabs.SDK.Tests/bin/Debug/net8.0
+/ElevenLabsSDK/tests/ElevenLabs.SDK.Tests/obj/Debug/net8.0
