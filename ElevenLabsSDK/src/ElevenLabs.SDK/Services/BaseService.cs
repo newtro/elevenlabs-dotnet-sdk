@@ -13,7 +13,7 @@ namespace ElevenLabs.SDK.Services
     /// <summary>
     /// Base class for ElevenLabs services that provides common functionality.
     /// </summary>
-    internal abstract class BaseService
+    public abstract class BaseService
     {
         protected readonly IElevenLabsHttpClient HttpClient;
         protected static readonly JsonSerializerOptions JsonOptions = new JsonSerializerOptions

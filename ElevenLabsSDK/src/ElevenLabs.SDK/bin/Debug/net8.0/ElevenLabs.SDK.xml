@@ -1,0 +1,873 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ElevenLabs.SDK</name>
+    </assembly>
+    <members>
+        <member name="T:ElevenLabs.SDK.Client.ElevenLabsHttpClient">
+            <summary>
+            Base HTTP client for making requests to the ElevenLabs API.
+            </summary>
+        </member>
+        <member name="M:ElevenLabs.SDK.Client.ElevenLabsHttpClient.#ctor(System.Net.Http.HttpClient,Microsoft.Extensions.Options.IOptions{ElevenLabs.SDK.Configuration.ElevenLabsOptions})">
+            <summary>
+            Initializes a new instance of the <see cref="T:ElevenLabs.SDK.Client.ElevenLabsHttpClient"/> class.
+            </summary>
+            <param name="httpClient">The HTTP client.</param>
+            <param name="options">The ElevenLabs API options.</param>
+        </member>
+        <member name="M:ElevenLabs.SDK.Client.ElevenLabsHttpClient.SendAsync(System.Net.Http.HttpRequestMessage,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:ElevenLabs.SDK.Client.ElevenLabsHttpClient.GetAsync(System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:ElevenLabs.SDK.Client.ElevenLabsHttpClient.PostAsync(System.String,System.Net.Http.HttpContent,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:ElevenLabs.SDK.Client.ElevenLabsHttpClient.DeleteAsync(System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:ElevenLabs.SDK.Client.IElevenLabsHttpClient">
+            <summary>
+            Interface for the ElevenLabs HTTP client.
+            </summary>
+        </member>
+        <member name="M:ElevenLabs.SDK.Client.IElevenLabsHttpClient.SendAsync(System.Net.Http.HttpRequestMessage,System.Threading.CancellationToken)">
+            <summary>
+            Sends an HTTP request as an asynchronous operation.
+            </summary>
+            <param name="request">The HTTP request message to send.</param>
+            <param name="cancellationToken">A cancellation token to cancel the operation.</param>
+            <returns>The HTTP response message.</returns>
+        </member>
+        <member name="M:ElevenLabs.SDK.Client.IElevenLabsHttpClient.GetAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Sends a GET request to the specified URI as an asynchronous operation.
+            </summary>
+            <param name="requestUri">The URI the request is sent to.</param>
+            <param name="cancellationToken">A cancellation token to cancel the operation.</param>
+            <returns>The HTTP response message.</returns>
+        </member>
+        <member name="M:ElevenLabs.SDK.Client.IElevenLabsHttpClient.PostAsync(System.String,System.Net.Http.HttpContent,System.Threading.CancellationToken)">
+            <summary>
+            Sends a POST request to the specified URI as an asynchronous operation.
+            </summary>
+            <param name="requestUri">The URI the request is sent to.</param>
+            <param name="content">The HTTP request content sent to the server.</param>
+            <param name="cancellationToken">A cancellation token to cancel the operation.</param>
+            <returns>The HTTP response message.</returns>
+        </member>
+        <member name="M:ElevenLabs.SDK.Client.IElevenLabsHttpClient.DeleteAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Sends a DELETE request to the specified URI as an asynchronous operation.
+            </summary>
+            <param name="requestUri">The URI the request is sent to.</param>
+            <param name="cancellationToken">A cancellation token to cancel the operation.</param>
+            <returns>The HTTP response message.</returns>
+        </member>
+        <member name="T:ElevenLabs.SDK.Client.ResponseHandler">
+            <summary>
+            Helper class for handling HTTP responses from the ElevenLabs API.
+            </summary>
+        </member>
+        <member name="M:ElevenLabs.SDK.Client.ResponseHandler.EnsureSuccessStatusCodeAsync(System.Net.Http.HttpResponseMessage)">
+            <summary>
+            Ensures that the HTTP response was successful, or throws an appropriate exception.
+            </summary>
+            <param name="response">The HTTP response message.</param>
+            <returns>A task representing the asynchronous operation.</returns>
+            <exception cref="T:ElevenLabs.SDK.Exceptions.ElevenLabsException">Thrown when the response is not successful.</exception>
+        </member>
+        <member name="T:ElevenLabs.SDK.Client.ErrorResponse">
+            <summary>
+            Represents an error response from the ElevenLabs API.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.Client.ErrorResponse.Status">
+            <summary>
+            Gets or sets the status of the error.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.Client.ErrorResponse.Message">
+            <summary>
+            Gets or sets the error message.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.Client.ErrorResponse.ValidationErrors">
+            <summary>
+            Gets or sets the validation errors.
+            </summary>
+        </member>
+        <member name="T:ElevenLabs.SDK.Configuration.ElevenLabsOptions">
+            <summary>
+            Configuration options for the ElevenLabs API client.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.Configuration.ElevenLabsOptions.ApiKey">
+            <summary>
+            The API key used for authentication with the ElevenLabs API.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.Configuration.ElevenLabsOptions.BaseUrl">
+            <summary>
+            The base URL for the ElevenLabs API. Defaults to "https://api.elevenlabs.io/v1".
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.Configuration.ElevenLabsOptions.TimeoutSeconds">
+            <summary>
+            Timeout for API requests in seconds. Defaults to 100 seconds.
+            </summary>
+        </member>
+        <member name="M:ElevenLabs.SDK.Configuration.ElevenLabsOptions.Validate">
+            <summary>
+            Validates that the required configuration options are set.
+            </summary>
+            <exception cref="T:System.ArgumentException">Thrown when required options are missing or invalid.</exception>
+        </member>
+        <member name="T:ElevenLabs.SDK.ElevenLabsClient">
+            <summary>
+            The main entry point for the ElevenLabs SDK.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.ElevenLabsClient.TextToSpeech">
+            <summary>
+            Gets the text-to-speech service.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.ElevenLabsClient.Voices">
+            <summary>
+            Gets the voice service.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.ElevenLabsClient.Models">
+            <summary>
+            Gets the model service.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.ElevenLabsClient.SpeechToText">
+            <summary>
+            Gets the speech-to-text service.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.ElevenLabsClient.VoiceChanger">
+            <summary>
+            Gets the voice changer service.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.ElevenLabsClient.AudioIsolation">
+            <summary>
+            Gets the audio isolation service.
+            </summary>
+        </member>
+        <member name="M:ElevenLabs.SDK.ElevenLabsClient.#ctor(ElevenLabs.SDK.Services.ITextToSpeechService,ElevenLabs.SDK.Services.IVoiceService,ElevenLabs.SDK.Services.IModelService,ElevenLabs.SDK.Services.ISpeechToTextService,ElevenLabs.SDK.Services.IVoiceChangerService,ElevenLabs.SDK.Services.IAudioIsolationService)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ElevenLabs.SDK.ElevenLabsClient"/> class.
+            </summary>
+            <param name="textToSpeechService">The text-to-speech service.</param>
+            <param name="voiceService">The voice service.</param>
+            <param name="modelService">The model service.</param>
+            <param name="speechToTextService">The speech-to-text service.</param>
+            <param name="voiceChangerService">The voice changer service.</param>
+            <param name="audioIsolationService">The audio isolation service.</param>
+        </member>
+        <member name="T:ElevenLabs.SDK.IElevenLabsClient">
+            <summary>
+            Interface for the ElevenLabs client.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.IElevenLabsClient.TextToSpeech">
+            <summary>
+            Gets the text-to-speech service.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.IElevenLabsClient.Voices">
+            <summary>
+            Gets the voice service.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.IElevenLabsClient.Models">
+            <summary>
+            Gets the model service.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.IElevenLabsClient.SpeechToText">
+            <summary>
+            Gets the speech-to-text service.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.IElevenLabsClient.VoiceChanger">
+            <summary>
+            Gets the voice changer service.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.IElevenLabsClient.AudioIsolation">
+            <summary>
+            Gets the audio isolation service.
+            </summary>
+        </member>
+        <member name="T:ElevenLabs.SDK.ServiceCollectionExtensions">
+            <summary>
+            Extension methods for setting up ElevenLabs services in an <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/>.
+            </summary>
+        </member>
+        <member name="M:ElevenLabs.SDK.ServiceCollectionExtensions.AddElevenLabs(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{ElevenLabs.SDK.Configuration.ElevenLabsOptions})">
+            <summary>
+            Adds ElevenLabs services to the specified <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/>.
+            </summary>
+            <param name="services">The <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> to add services to.</param>
+            <param name="configureOptions">A delegate to configure the <see cref="T:ElevenLabs.SDK.Configuration.ElevenLabsOptions"/>.</param>
+            <returns>The <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> so that additional calls can be chained.</returns>
+        </member>
+        <member name="M:ElevenLabs.SDK.ServiceCollectionExtensions.AddElevenLabsCore(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Adds ElevenLabs services to the specified <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/>.
+            </summary>
+            <param name="services">The <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> to add services to.</param>
+            <returns>The <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection"/> so that additional calls can be chained.</returns>
+        </member>
+        <member name="T:ElevenLabs.SDK.Exceptions.ElevenLabsException">
+            <summary>
+            Base exception for all ElevenLabs API exceptions.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.Exceptions.ElevenLabsException.StatusCode">
+            <summary>
+            Gets the HTTP status code associated with the exception.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.Exceptions.ElevenLabsException.ErrorCode">
+            <summary>
+            Gets the error code returned by the API.
+            </summary>
+        </member>
+        <member name="M:ElevenLabs.SDK.Exceptions.ElevenLabsException.#ctor(System.String,System.Net.HttpStatusCode,System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ElevenLabs.SDK.Exceptions.ElevenLabsException"/> class.
+            </summary>
+            <param name="message">The error message.</param>
+            <param name="statusCode">The HTTP status code.</param>
+            <param name="errorCode">The error code returned by the API.</param>
+            <param name="innerException">The inner exception.</param>
+        </member>
+        <member name="T:ElevenLabs.SDK.Exceptions.ElevenLabsAuthenticationException">
+            <summary>
+            Exception thrown when authentication fails.
+            </summary>
+        </member>
+        <member name="M:ElevenLabs.SDK.Exceptions.ElevenLabsAuthenticationException.#ctor(System.String,System.Net.HttpStatusCode,System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ElevenLabs.SDK.Exceptions.ElevenLabsAuthenticationException"/> class.
+            </summary>
+            <param name="message">The error message.</param>
+            <param name="statusCode">The HTTP status code.</param>
+            <param name="errorCode">The error code returned by the API.</param>
+            <param name="innerException">The inner exception.</param>
+        </member>
+        <member name="T:ElevenLabs.SDK.Exceptions.ElevenLabsResourceNotFoundException">
+            <summary>
+            Exception thrown when a resource is not found.
+            </summary>
+        </member>
+        <member name="M:ElevenLabs.SDK.Exceptions.ElevenLabsResourceNotFoundException.#ctor(System.String,System.Net.HttpStatusCode,System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ElevenLabs.SDK.Exceptions.ElevenLabsResourceNotFoundException"/> class.
+            </summary>
+            <param name="message">The error message.</param>
+            <param name="statusCode">The HTTP status code.</param>
+            <param name="errorCode">The error code returned by the API.</param>
+            <param name="innerException">The inner exception.</param>
+        </member>
+        <member name="T:ElevenLabs.SDK.Exceptions.ElevenLabsValidationException">
+            <summary>
+            Exception thrown when a request is invalid.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.Exceptions.ElevenLabsValidationException.ValidationErrors">
+            <summary>
+            Gets the validation errors.
+            </summary>
+        </member>
+        <member name="M:ElevenLabs.SDK.Exceptions.ElevenLabsValidationException.#ctor(System.String,System.Object,System.Net.HttpStatusCode,System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ElevenLabs.SDK.Exceptions.ElevenLabsValidationException"/> class.
+            </summary>
+            <param name="message">The error message.</param>
+            <param name="validationErrors">The validation errors.</param>
+            <param name="statusCode">The HTTP status code.</param>
+            <param name="errorCode">The error code returned by the API.</param>
+            <param name="innerException">The inner exception.</param>
+        </member>
+        <member name="T:ElevenLabs.SDK.Exceptions.ElevenLabsRateLimitExceededException">
+            <summary>
+            Exception thrown when the API rate limit is exceeded.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.Exceptions.ElevenLabsRateLimitExceededException.ResetTime">
+            <summary>
+            Gets the time when the rate limit will reset.
+            </summary>
+        </member>
+        <member name="M:ElevenLabs.SDK.Exceptions.ElevenLabsRateLimitExceededException.#ctor(System.String,System.Nullable{System.DateTimeOffset},System.Net.HttpStatusCode,System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ElevenLabs.SDK.Exceptions.ElevenLabsRateLimitExceededException"/> class.
+            </summary>
+            <param name="message">The error message.</param>
+            <param name="resetTime">The time when the rate limit will reset.</param>
+            <param name="statusCode">The HTTP status code.</param>
+            <param name="errorCode">The error code returned by the API.</param>
+            <param name="innerException">The inner exception.</param>
+        </member>
+        <member name="T:ElevenLabs.SDK.Exceptions.ElevenLabsServerException">
+            <summary>
+            Exception thrown when the API returns a server error.
+            </summary>
+        </member>
+        <member name="M:ElevenLabs.SDK.Exceptions.ElevenLabsServerException.#ctor(System.String,System.Net.HttpStatusCode,System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ElevenLabs.SDK.Exceptions.ElevenLabsServerException"/> class.
+            </summary>
+            <param name="message">The error message.</param>
+            <param name="statusCode">The HTTP status code.</param>
+            <param name="errorCode">The error code returned by the API.</param>
+            <param name="innerException">The inner exception.</param>
+        </member>
+        <member name="T:ElevenLabs.SDK.Models.Model">
+            <summary>
+            Represents a model in the ElevenLabs API.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.Models.Model.Id">
+            <summary>
+            Gets or sets the unique identifier of the model.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.Models.Model.Name">
+            <summary>
+            Gets or sets the name of the model.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.Models.Model.Description">
+            <summary>
+            Gets or sets the description of the model.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.Models.Model.SupportedLanguages">
+            <summary>
+            Gets or sets the list of languages supported by this model.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.Models.Model.CanDoTextToSpeech">
+            <summary>
+            Gets or sets whether the model can perform text-to-speech conversion.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.Models.Model.CanDoVoiceConversion">
+            <summary>
+            Gets or sets whether the model can perform voice conversion.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.Models.Model.TokenCostFactor">
+            <summary>
+            Gets or sets the token cost factor for using this model.
+            </summary>
+        </member>
+        <member name="T:ElevenLabs.SDK.Models.PronunciationDictionaryLocator">
+            <summary>
+            Represents a pronunciation dictionary locator in the ElevenLabs API.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.Models.PronunciationDictionaryLocator.Id">
+            <summary>
+            Gets or sets the unique identifier of the pronunciation dictionary.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.Models.PronunciationDictionaryLocator.VersionId">
+            <summary>
+            Gets or sets the version identifier of the pronunciation dictionary.
+            </summary>
+        </member>
+        <member name="T:ElevenLabs.SDK.Models.TextToSpeechRequest">
+            <summary>
+            Represents a text-to-speech request in the ElevenLabs API.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.Models.TextToSpeechRequest.Text">
+            <summary>
+            Gets or sets the text that will be converted into speech.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.Models.TextToSpeechRequest.ModelId">
+            <summary>
+            Gets or sets the identifier of the model to use for text-to-speech conversion.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.Models.TextToSpeechRequest.LanguageCode">
+            <summary>
+            Gets or sets the language code (ISO 639-1) used to enforce a language for the model.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.Models.TextToSpeechRequest.VoiceSettings">
+            <summary>
+            Gets or sets the voice settings to use for the text-to-speech conversion.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.Models.TextToSpeechRequest.PronunciationDictionaryLocators">
+            <summary>
+            Gets or sets the pronunciation dictionary locators to apply to the text.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.Models.TextToSpeechRequest.Seed">
+            <summary>
+            Gets or sets the seed for deterministic sampling.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.Models.TextToSpeechRequest.PreviousText">
+            <summary>
+            Gets or sets the text that came before the text of the current request.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.Models.TextToSpeechRequest.NextText">
+            <summary>
+            Gets or sets the text that comes after the text of the current request.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.Models.TextToSpeechRequest.PreviousRequestIds">
+            <summary>
+            Gets or sets the list of request IDs of the samples that were generated before this generation.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.Models.TextToSpeechRequest.NextRequestIds">
+            <summary>
+            Gets or sets the list of request IDs of the samples that come after this generation.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.Models.TextToSpeechRequest.ApplyTextNormalization">
+            <summary>
+            Gets or sets the text normalization mode.
+            </summary>
+        </member>
+        <member name="T:ElevenLabs.SDK.Models.Voice">
+            <summary>
+            Represents a voice in the ElevenLabs API.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.Models.Voice.Id">
+            <summary>
+            Gets or sets the unique identifier of the voice.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.Models.Voice.Name">
+            <summary>
+            Gets or sets the name of the voice.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.Models.Voice.Category">
+            <summary>
+            Gets or sets the category of the voice (e.g., "professional", "cloned").
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.Models.Voice.Labels">
+            <summary>
+            Gets or sets the labels associated with the voice (e.g., accent, age, gender).
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.Models.Voice.Description">
+            <summary>
+            Gets or sets the description of the voice.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.Models.Voice.Gender">
+            <summary>
+            Gets or sets the gender of the voice.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.Models.Voice.UseCase">
+            <summary>
+            Gets or sets the use case for the voice.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.Models.Voice.AvailableForTiers">
+            <summary>
+            Gets or sets the list of subscription tiers this voice is available for.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.Models.Voice.SupportedModels">
+            <summary>
+            Gets or sets the list of models supported by this voice.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.Models.Voice.Settings">
+            <summary>
+            Gets or sets the settings for the voice.
+            </summary>
+        </member>
+        <member name="T:ElevenLabs.SDK.Models.VoiceSettings">
+            <summary>
+            Represents the settings for a voice in the ElevenLabs API.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.Models.VoiceSettings.Stability">
+            <summary>
+            Gets or sets the stability value for the voice.
+            Higher values result in more stable and consistent audio generation at the cost of variety.
+            Range: 0.0 to 1.0
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.Models.VoiceSettings.SimilarityBoost">
+            <summary>
+            Gets or sets the similarity boost value for the voice.
+            Higher values make the voice more closely match the reference audio at the cost of variety.
+            Range: 0.0 to 1.0
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.Models.VoiceSettings.Style">
+            <summary>
+            Gets or sets the style value for the voice.
+            Higher values result in more expressive speech with more variance in tone.
+            Range: 0.0 to 1.0
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.Models.VoiceSettings.UseSpeakerBoost">
+            <summary>
+            Gets or sets whether to use speaker boost for the voice.
+            Speaker boost makes the voice sound more like the reference audio.
+            </summary>
+        </member>
+        <member name="M:ElevenLabs.SDK.Models.VoiceSettings.Validate">
+            <summary>
+            Validates that the voice settings are within acceptable ranges.
+            </summary>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown when a setting is outside its valid range.</exception>
+        </member>
+        <member name="T:ElevenLabs.SDK.Services.AudioIsolationService">
+            <summary>
+            Implementation of the ElevenLabs Audio Isolation service.
+            </summary>
+        </member>
+        <member name="M:ElevenLabs.SDK.Services.AudioIsolationService.#ctor(ElevenLabs.SDK.Client.IElevenLabsHttpClient)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ElevenLabs.SDK.Services.AudioIsolationService"/> class.
+            </summary>
+            <param name="httpClient">The ElevenLabs HTTP client.</param>
+        </member>
+        <member name="M:ElevenLabs.SDK.Services.AudioIsolationService.IsolateVoiceAsync(System.IO.Stream,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:ElevenLabs.SDK.Services.AudioIsolationService.StreamIsolateVoiceAsync(System.IO.Stream,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:ElevenLabs.SDK.Services.BaseService">
+            <summary>
+            Base class for ElevenLabs services that provides common functionality.
+            </summary>
+        </member>
+        <member name="M:ElevenLabs.SDK.Services.BaseService.#ctor(ElevenLabs.SDK.Client.IElevenLabsHttpClient)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ElevenLabs.SDK.Services.BaseService"/> class.
+            </summary>
+            <param name="httpClient">The ElevenLabs HTTP client.</param>
+        </member>
+        <member name="M:ElevenLabs.SDK.Services.BaseService.ValidateNotNullOrWhitespace(System.String,System.String)">
+            <summary>
+            Validates that a parameter is not null or whitespace.
+            </summary>
+            <param name="value">The value to validate.</param>
+            <param name="paramName">The name of the parameter.</param>
+            <exception cref="T:System.ArgumentException">Thrown when the value is null or whitespace.</exception>
+        </member>
+        <member name="M:ElevenLabs.SDK.Services.BaseService.ValidateNotNull(System.Object,System.String)">
+            <summary>
+            Validates that a parameter is not null.
+            </summary>
+            <param name="value">The value to validate.</param>
+            <param name="paramName">The name of the parameter.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when the value is null.</exception>
+        </member>
+        <member name="M:ElevenLabs.SDK.Services.BaseService.HandleApiExceptionAsync``1(System.Func{System.Threading.Tasks.Task{``0}},System.String)">
+            <summary>
+            Handles exceptions that may occur during API calls.
+            </summary>
+            <typeparam name="T">The type of the result.</typeparam>
+            <param name="apiCall">The API call to execute.</param>
+            <param name="errorMessage">The error message to use if an exception occurs.</param>
+            <returns>The result of the API call.</returns>
+        </member>
+        <member name="T:ElevenLabs.SDK.Services.IAudioIsolationService">
+            <summary>
+            Interface for the ElevenLabs Audio Isolation service.
+            </summary>
+        </member>
+        <member name="M:ElevenLabs.SDK.Services.IAudioIsolationService.IsolateVoiceAsync(System.IO.Stream,System.Threading.CancellationToken)">
+            <summary>
+            Isolates voice from an audio file.
+            </summary>
+            <param name="audioStream">The audio stream containing the audio to process.</param>
+            <param name="cancellationToken">A cancellation token to cancel the operation.</param>
+            <returns>A stream containing the processed audio with isolated voice.</returns>
+        </member>
+        <member name="M:ElevenLabs.SDK.Services.IAudioIsolationService.StreamIsolateVoiceAsync(System.IO.Stream,System.Threading.CancellationToken)">
+            <summary>
+            Streams the voice isolation process for an audio file.
+            </summary>
+            <param name="audioStream">The audio stream containing the audio to process.</param>
+            <param name="cancellationToken">A cancellation token to cancel the operation.</param>
+            <returns>A stream containing the processed audio with isolated voice.</returns>
+        </member>
+        <member name="T:ElevenLabs.SDK.Services.IModelService">
+            <summary>
+            Interface for the ElevenLabs Model service.
+            </summary>
+        </member>
+        <member name="M:ElevenLabs.SDK.Services.IModelService.GetModelsAsync(System.Threading.CancellationToken)">
+            <summary>
+            Gets all available models.
+            </summary>
+            <param name="cancellationToken">A cancellation token to cancel the operation.</param>
+            <returns>A list of available models.</returns>
+        </member>
+        <member name="T:ElevenLabs.SDK.Services.ISpeechToTextService">
+            <summary>
+            Interface for the ElevenLabs Speech-to-Text service.
+            </summary>
+        </member>
+        <member name="M:ElevenLabs.SDK.Services.ISpeechToTextService.SpeechToTextAsync(System.IO.Stream,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Converts speech to text.
+            </summary>
+            <param name="audioStream">The audio stream containing the speech to convert.</param>
+            <param name="modelId">The ID of the model to use for speech-to-text conversion.</param>
+            <param name="cancellationToken">A cancellation token to cancel the operation.</param>
+            <returns>The speech-to-text response containing the transcribed text.</returns>
+        </member>
+        <member name="T:ElevenLabs.SDK.Services.SpeechToTextResponse">
+            <summary>
+            Response from the speech-to-text conversion.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.Services.SpeechToTextResponse.Text">
+            <summary>
+            Gets or sets the transcribed text.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.Services.SpeechToTextResponse.ModelId">
+            <summary>
+            Gets or sets the ID of the model used for transcription.
+            </summary>
+        </member>
+        <member name="T:ElevenLabs.SDK.Services.ITextToSpeechService">
+            <summary>
+            Interface for the ElevenLabs Text-to-Speech service.
+            </summary>
+        </member>
+        <member name="M:ElevenLabs.SDK.Services.ITextToSpeechService.TextToSpeechAsync(System.String,ElevenLabs.SDK.Models.TextToSpeechRequest,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Converts text to speech using the specified voice.
+            </summary>
+            <param name="voiceId">The ID of the voice to use.</param>
+            <param name="request">The text-to-speech request.</param>
+            <param name="outputFormat">The output format of the generated audio.</param>
+            <param name="cancellationToken">A cancellation token to cancel the operation.</param>
+            <returns>A stream containing the generated audio.</returns>
+        </member>
+        <member name="M:ElevenLabs.SDK.Services.ITextToSpeechService.StreamTextToSpeechAsync(System.String,ElevenLabs.SDK.Models.TextToSpeechRequest,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Streams text to speech using the specified voice.
+            </summary>
+            <param name="voiceId">The ID of the voice to use.</param>
+            <param name="request">The text-to-speech request.</param>
+            <param name="outputFormat">The output format of the generated audio.</param>
+            <param name="cancellationToken">A cancellation token to cancel the operation.</param>
+            <returns>A stream containing the generated audio.</returns>
+        </member>
+        <member name="T:ElevenLabs.SDK.Services.IVoiceChangerService">
+            <summary>
+            Interface for the ElevenLabs Voice Changer service.
+            </summary>
+        </member>
+        <member name="M:ElevenLabs.SDK.Services.IVoiceChangerService.ChangeVoiceAsync(System.IO.Stream,System.String,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Changes the voice in an audio file.
+            </summary>
+            <param name="audioStream">The audio stream containing the speech to convert.</param>
+            <param name="voiceId">The ID of the voice to use for conversion.</param>
+            <param name="modelId">The ID of the model to use for voice changing.</param>
+            <param name="cancellationToken">A cancellation token to cancel the operation.</param>
+            <returns>A stream containing the converted audio.</returns>
+        </member>
+        <member name="M:ElevenLabs.SDK.Services.IVoiceChangerService.StreamChangeVoiceAsync(System.IO.Stream,System.String,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Streams the voice changing process for an audio file.
+            </summary>
+            <param name="audioStream">The audio stream containing the speech to convert.</param>
+            <param name="voiceId">The ID of the voice to use for conversion.</param>
+            <param name="modelId">The ID of the model to use for voice changing.</param>
+            <param name="cancellationToken">A cancellation token to cancel the operation.</param>
+            <returns>A stream containing the converted audio.</returns>
+        </member>
+        <member name="T:ElevenLabs.SDK.Services.IVoiceService">
+            <summary>
+            Interface for the ElevenLabs Voice service.
+            </summary>
+        </member>
+        <member name="M:ElevenLabs.SDK.Services.IVoiceService.GetVoicesAsync(System.Boolean,System.Threading.CancellationToken)">
+            <summary>
+            Gets all available voices.
+            </summary>
+            <param name="showLegacy">Whether to include legacy premade voices in the response.</param>
+            <param name="cancellationToken">A cancellation token to cancel the operation.</param>
+            <returns>A list of available voices.</returns>
+        </member>
+        <member name="M:ElevenLabs.SDK.Services.IVoiceService.GetVoiceAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Gets a specific voice by ID.
+            </summary>
+            <param name="voiceId">The ID of the voice to get.</param>
+            <param name="cancellationToken">A cancellation token to cancel the operation.</param>
+            <returns>The requested voice.</returns>
+        </member>
+        <member name="M:ElevenLabs.SDK.Services.IVoiceService.GetDefaultVoiceSettingsAsync(System.Threading.CancellationToken)">
+            <summary>
+            Gets the default voice settings.
+            </summary>
+            <param name="cancellationToken">A cancellation token to cancel the operation.</param>
+            <returns>The default voice settings.</returns>
+        </member>
+        <member name="M:ElevenLabs.SDK.Services.IVoiceService.GetVoiceSettingsAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Gets the settings for a specific voice.
+            </summary>
+            <param name="voiceId">The ID of the voice to get settings for.</param>
+            <param name="cancellationToken">A cancellation token to cancel the operation.</param>
+            <returns>The voice settings.</returns>
+        </member>
+        <member name="M:ElevenLabs.SDK.Services.IVoiceService.EditVoiceSettingsAsync(System.String,ElevenLabs.SDK.Models.VoiceSettings,System.Threading.CancellationToken)">
+            <summary>
+            Edits the settings for a specific voice.
+            </summary>
+            <param name="voiceId">The ID of the voice to edit settings for.</param>
+            <param name="settings">The new voice settings.</param>
+            <param name="cancellationToken">A cancellation token to cancel the operation.</param>
+            <returns>A task representing the asynchronous operation.</returns>
+        </member>
+        <member name="M:ElevenLabs.SDK.Services.IVoiceService.DeleteVoiceAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Deletes a specific voice.
+            </summary>
+            <param name="voiceId">The ID of the voice to delete.</param>
+            <param name="cancellationToken">A cancellation token to cancel the operation.</param>
+            <returns>A task representing the asynchronous operation.</returns>
+        </member>
+        <member name="T:ElevenLabs.SDK.Services.ModelService">
+            <summary>
+            Implementation of the ElevenLabs Model service.
+            </summary>
+        </member>
+        <member name="M:ElevenLabs.SDK.Services.ModelService.#ctor(ElevenLabs.SDK.Client.IElevenLabsHttpClient)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ElevenLabs.SDK.Services.ModelService"/> class.
+            </summary>
+            <param name="httpClient">The ElevenLabs HTTP client.</param>
+        </member>
+        <member name="M:ElevenLabs.SDK.Services.ModelService.GetModelsAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:ElevenLabs.SDK.Services.ModelsResponse">
+            <summary>
+            Response model for the get models endpoint.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.Services.ModelsResponse.Models">
+            <summary>
+            Gets or sets the list of models.
+            </summary>
+        </member>
+        <member name="T:ElevenLabs.SDK.Services.SpeechToTextService">
+            <summary>
+            Implementation of the ElevenLabs Speech-to-Text service.
+            </summary>
+        </member>
+        <member name="M:ElevenLabs.SDK.Services.SpeechToTextService.#ctor(ElevenLabs.SDK.Client.IElevenLabsHttpClient)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ElevenLabs.SDK.Services.SpeechToTextService"/> class.
+            </summary>
+            <param name="httpClient">The ElevenLabs HTTP client.</param>
+        </member>
+        <member name="M:ElevenLabs.SDK.Services.SpeechToTextService.SpeechToTextAsync(System.IO.Stream,System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:ElevenLabs.SDK.Services.TextToSpeechService">
+            <summary>
+            Implementation of the ElevenLabs Text-to-Speech service.
+            </summary>
+        </member>
+        <member name="M:ElevenLabs.SDK.Services.TextToSpeechService.#ctor(ElevenLabs.SDK.Client.IElevenLabsHttpClient)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ElevenLabs.SDK.Services.TextToSpeechService"/> class.
+            </summary>
+            <param name="httpClient">The ElevenLabs HTTP client.</param>
+        </member>
+        <member name="M:ElevenLabs.SDK.Services.TextToSpeechService.TextToSpeechAsync(System.String,ElevenLabs.SDK.Models.TextToSpeechRequest,System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:ElevenLabs.SDK.Services.TextToSpeechService.StreamTextToSpeechAsync(System.String,ElevenLabs.SDK.Models.TextToSpeechRequest,System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:ElevenLabs.SDK.Services.VoiceChangerService">
+            <summary>
+            Implementation of the ElevenLabs Voice Changer service.
+            </summary>
+        </member>
+        <member name="M:ElevenLabs.SDK.Services.VoiceChangerService.#ctor(ElevenLabs.SDK.Client.IElevenLabsHttpClient)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ElevenLabs.SDK.Services.VoiceChangerService"/> class.
+            </summary>
+            <param name="httpClient">The ElevenLabs HTTP client.</param>
+        </member>
+        <member name="M:ElevenLabs.SDK.Services.VoiceChangerService.ChangeVoiceAsync(System.IO.Stream,System.String,System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:ElevenLabs.SDK.Services.VoiceChangerService.StreamChangeVoiceAsync(System.IO.Stream,System.String,System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:ElevenLabs.SDK.Services.VoiceService">
+            <summary>
+            Implementation of the ElevenLabs Voice service.
+            </summary>
+        </member>
+        <member name="M:ElevenLabs.SDK.Services.VoiceService.#ctor(ElevenLabs.SDK.Client.IElevenLabsHttpClient)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ElevenLabs.SDK.Services.VoiceService"/> class.
+            </summary>
+            <param name="httpClient">The ElevenLabs HTTP client.</param>
+        </member>
+        <member name="M:ElevenLabs.SDK.Services.VoiceService.GetVoicesAsync(System.Boolean,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:ElevenLabs.SDK.Services.VoiceService.GetVoiceAsync(System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:ElevenLabs.SDK.Services.VoiceService.GetDefaultVoiceSettingsAsync(System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:ElevenLabs.SDK.Services.VoiceService.GetVoiceSettingsAsync(System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:ElevenLabs.SDK.Services.VoiceService.EditVoiceSettingsAsync(System.String,ElevenLabs.SDK.Models.VoiceSettings,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="M:ElevenLabs.SDK.Services.VoiceService.DeleteVoiceAsync(System.String,System.Threading.CancellationToken)">
+            <inheritdoc />
+        </member>
+        <member name="T:ElevenLabs.SDK.Services.VoicesResponse">
+            <summary>
+            Response model for the get voices endpoint.
+            </summary>
+        </member>
+        <member name="P:ElevenLabs.SDK.Services.VoicesResponse.Voices">
+            <summary>
+            Gets or sets the list of voices.
+            </summary>
+        </member>
+    </members>
+</doc>

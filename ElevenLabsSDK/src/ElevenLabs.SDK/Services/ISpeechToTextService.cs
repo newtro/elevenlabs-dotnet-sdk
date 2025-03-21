@@ -33,5 +33,7 @@ namespace ElevenLabs.SDK.Services
         /// Gets or sets the ID of the model used for transcription.
         /// </summary>
         public string ModelId { get; set; }
+        public string Language { get; set; }
+        public double Confidence { get; set; }
     }
 }

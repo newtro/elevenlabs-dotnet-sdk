@@ -11,7 +11,7 @@ namespace ElevenLabs.SDK.Models
         /// <summary>
         /// Gets or sets the unique identifier of the model.
         /// </summary>
-        public string ModelId { get; set; }
+        public string Id { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the model.

@@ -1,3 +1,5 @@
+using Xunit;
+
 namespace ElevenLabs.SDK.Tests;
 
 public class UnitTest1
